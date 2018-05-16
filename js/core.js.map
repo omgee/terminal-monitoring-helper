@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "core.js",
+  "sourceRoot": "",
+  "sources": [
+    "core.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;AAAA,MAAA;;EAAM,MAAN,MAAA,IAAA;IAES,OAAN,IAAM,CAAA,CAAA;aAEL,OAAO,CAAC,GAAR,CAAY,SAAZ;IAFK;;EAFT;;EAMA,GAAG,CAAC,IAAJ,CAAA;AANA",
+  "sourcesContent": [
+    "class App\r\n\r\n  @init: () ->\r\n\r\n    console.log 'Init...'\r\n\r\nApp.init()"
+  ]
+}
