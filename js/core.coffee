@@ -45,6 +45,7 @@ class App
   @manualMode: (value) ->
     dateObj = new Date()
     [terminal, date, amount, number, operator, comment] = value.split("\n");
+    amount = '' if amount is undefined
     amount += '.00'
     date = '' if date is undefined
     getDate = dateObj.getDate()
@@ -75,11 +76,13 @@ class App
     for status in @statuses
       if status.indexOf(val) isnt -1
         return status
+    return ''
 
   @getError: (val) ->
     for error in @errors
       if error.indexOf(val) isnt -1
         return error
+    return ''
 
   @editListener: () ->
     value = App.ticketEdit.value
@@ -91,7 +94,9 @@ class App
       App.manualMode value
     return
 
-  @genTicket: (terminal, date, amount, number, operator, comment, status, error) ->
-    return "Терминал: #{terminal}\nДата/время: #{date}\nСумма: #{amount}\nНомер счета/телефона: #{number}\nВерный номер счета/телефона:\nСервис/Оператор: #{operator}\nВерный Сервис/Оператор:\nКомментарий: #{comment}\n#{@getStatus status}\n#{@getError error}"
+  @genTicket: (terminal = '', date = '', amount = '', number = '', operator = '', comment = '', status, error) ->
+    status = @getStatus status
+    error = @getError error
+    return "Терминал: #{terminal}\nДата/время: #{date}\nСумма: #{amount}\nНомер счета/телефона: #{number}\nВерный номер счета/телефона:\nСервис/Оператор: #{operator}\nВерный Сервис/Оператор:\nКомментарий: #{comment}\n#{status}\n#{error}"
 
 App.init()

@@ -31,6 +31,9 @@
         var amount, comment, date, dateObj, getDate, getFullYear, getMonth, number, operator, terminal;
         dateObj = new Date();
         [terminal, date, amount, number, operator, comment] = value.split("\n");
+        if (amount === void 0) {
+          amount = '';
+        }
         amount += '.00';
         if (date === void 0) {
           date = '';
@@ -74,6 +77,7 @@
             return status;
           }
         }
+        return '';
       }
 
       static getError(val) {
@@ -85,6 +89,7 @@
             return error;
           }
         }
+        return '';
       }
 
       static editListener() {
@@ -99,8 +104,10 @@
         }
       }
 
-      static genTicket(terminal, date, amount, number, operator, comment, status, error) {
-        return `Терминал: ${terminal}\nДата/время: ${date}\nСумма: ${amount}\nНомер счета/телефона: ${number}\nВерный номер счета/телефона:\nСервис/Оператор: ${operator}\nВерный Сервис/Оператор:\nКомментарий: ${comment}\n${this.getStatus(status)}\n${this.getError(error)}`;
+      static genTicket(terminal = '', date = '', amount = '', number = '', operator = '', comment = '', status, error) {
+        status = this.getStatus(status);
+        error = this.getError(error);
+        return `Терминал: ${terminal}\nДата/время: ${date}\nСумма: ${amount}\nНомер счета/телефона: ${number}\nВерный номер счета/телефона:\nСервис/Оператор: ${operator}\nВерный Сервис/Оператор:\nКомментарий: ${comment}\n${status}\n${error}`;
       }
 
     };
