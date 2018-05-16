@@ -90,6 +90,7 @@ textarea {
   min-height: 100%;
   max-width: 100%;
   max-height: 100%;
+  resize: none;
 }
 .wrap {
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -101,6 +102,7 @@ textarea {
   background: #fff;
   width: 768px;
   height: 384px;
+  overflow: hidden;
 }
 .wrap > .wrap-header {
   -webkit-flex-direction: row;
@@ -108,17 +110,23 @@ textarea {
   flex-direction: row;
   -webkit-justify-content: space-around;
   justify-content: space-around;
+  -webkit-box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.2);
   font-size: 1.25em;
-  border-bottom: thin solid rgba(0, 0, 0, 0.1);
-  padding: .75em;
+  background: #4CAF50;
+  padding: 1em;
 }
 .wrap > .wrap-header > .wrap-header-button {
   -webkit-align-items: center;
   align-items: center;
-  padding: .25em;
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  color: #fff;
 }
 .wrap > .wrap-header > .wrap-header-button.active {
-  border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+  -moz-opacity: 1;
+  opacity: 1;
 }
 .wrap > .wrap-body {
   -webkit-flex-direction: row;
@@ -163,10 +171,20 @@ textarea {
   -webkit-box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.2);
   -moz-box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.2);
-  background: rgba(0, 0, 0, 0.8);
+  background: #4CAF50;
+  color: #fff;
   padding: .5em;
-  color: rgba(255, 255, 255, 0.8);
   margin-left: .5em;
   cursor: pointer;
+}
+.wrap > .wrap-footer > .wrap-footer-button:active {
+  -webkit-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0px 0 rgba(0, 0, 0, 0.2);
+  -webkit-transform: translateY(1px);
+  -moz-transform: translateY(1px);
+  -ms-transform: translateY(1px);
+  -o-transform: translateY(1px);
+  transform: translateY(1px);
 }
 /*# sourceMappingURL=desktop.css.map */

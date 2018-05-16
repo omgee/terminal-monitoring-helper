@@ -2,6 +2,8 @@
 @font-color: rgba(0, 0, 0, .8);
 @border-color: rgba(0, 0, 0, .1);
 
+@main-color: #4CAF50;
+
 .df {
 
   display: -webkit-flex;
@@ -71,6 +73,13 @@
 
 }
 
+.op(@val) {
+
+  -moz-opacity: @val;
+  opacity: @val;
+
+}
+
 .bdrs(@val) {
 
   -webkit-border-radius: @val;
@@ -84,6 +93,16 @@
   -webkit-box-shadow: @val;
   -moz-box-shadow: @val;
   box-shadow: @val;
+
+}
+
+.tra(@val) {
+
+  -webkit-transform: @val;
+  -moz-transform: @val;
+  -ms-transform: @val;
+  -o-transform: @val;
+  transform: @val;
 
 }
 
@@ -142,6 +161,8 @@ textarea {
   max-width: 100%;
   max-height: 100%;
 
+  resize: none;
+
 }
 
 .wrap {
@@ -152,25 +173,30 @@ textarea {
   background: #fff;
   width: 768px;
   height: 384px;
+  overflow: hidden;
 
   & > .wrap-header {
 
     .fdr;
     .jcsa;
 
+    .bxsh(inset 0 -2px 4px @shadow-color);
+
     font-size: 1.25em;
-    border-bottom: thin solid @border-color;
-    padding: .75em;
+    background: @main-color;
+    padding: 1em;
 
     & > .wrap-header-button {
 
       .aic;
 
-      padding: .25em;
+      .op(.5);
+
+      color: #fff;
 
       &.active {
 
-        border-bottom: 2px solid @font-color;
+        .op(1);
 
       }
 
@@ -222,11 +248,18 @@ textarea {
       .bdrs(.25em);
       .bxsh(inset 0 -2px 0 @shadow-color);
 
-      background: @font-color;
+      background: @main-color;
+      color: #fff;
       padding: .5em;
-      color: rgba(255, 255, 255, .8);
       margin-left: .5em;
       cursor: pointer;
+
+      &:active {
+
+        .bxsh(inset 0 0px 0 @shadow-color);
+        .tra(translateY(1px));
+
+      }
 
     }
 
