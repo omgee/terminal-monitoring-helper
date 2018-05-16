@@ -8,10 +8,15 @@ class App
   @manualStatus: document.querySelector '#manualStatus'
 
   @statuses: [
+    'Статус=0 (Ожидание проведения)',
+    'Статус=7 (Платеж завершен)',
+    'Статус=100 (Платеж не проведен)',
     'Статус=120 (Платеж заблокирован при обработке)'
   ]
   @errors: [
-    'Ошибка=3003 (Превышен дневной лимит)'
+    'Ошибка=3003 (Превышен дневной лимит)',
+    'Ошибка=1200200 (Откат транзакции)',
+    'Ошибка=1220140 (Ошибочный номер абонента)'
   ]
 
   @init: () ->
@@ -66,19 +71,15 @@ class App
     @ticketDone.value = @genTicket(terminal, date, amount, number, operator, '', status, error)
     return
 
-  @getError: (val) ->
-    for error in @errors
-      do (error) ->
-        if error.indexOf(val) isnt -1
-          return error
-        return
-
   @getStatus: (val) ->
     for status in @statuses
-      do (status) ->
-        if status.indexOf(val) isnt -1
-          return status
-        return
+      if status.indexOf(val) isnt -1
+        return status
+
+  @getError: (val) ->
+    for error in @errors
+      if error.indexOf(val) isnt -1
+        return error
 
   @editListener: () ->
     value = App.ticketEdit.value

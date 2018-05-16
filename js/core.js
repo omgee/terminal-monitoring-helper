@@ -65,34 +65,26 @@
         this.ticketDone.value = this.genTicket(terminal, date, amount, number, operator, '', status, error);
       }
 
-      static getError(val) {
-        var error, i, len, ref, results;
-        ref = this.errors;
-        results = [];
-        for (i = 0, len = ref.length; i < len; i++) {
-          error = ref[i];
-          results.push((function(error) {
-            if (error.indexOf(val) !== -1) {
-              return error;
-            }
-          })(error));
-        }
-        return results;
-      }
-
       static getStatus(val) {
-        var i, len, ref, results, status;
+        var i, len, ref, status;
         ref = this.statuses;
-        results = [];
         for (i = 0, len = ref.length; i < len; i++) {
           status = ref[i];
-          results.push((function(status) {
-            if (status.indexOf(val) !== -1) {
-              return status;
-            }
-          })(status));
+          if (status.indexOf(val) !== -1) {
+            return status;
+          }
         }
-        return results;
+      }
+
+      static getError(val) {
+        var error, i, len, ref;
+        ref = this.errors;
+        for (i = 0, len = ref.length; i < len; i++) {
+          error = ref[i];
+          if (error.indexOf(val) !== -1) {
+            return error;
+          }
+        }
       }
 
       static editListener() {
@@ -125,9 +117,9 @@
 
     App.manualStatus = document.querySelector('#manualStatus');
 
-    App.statuses = ['Статус=120 (Платеж заблокирован при обработке)'];
+    App.statuses = ['Статус=0 (Ожидание проведения)', 'Статус=7 (Платеж завершен)', 'Статус=100 (Платеж не проведен)', 'Статус=120 (Платеж заблокирован при обработке)'];
 
-    App.errors = ['Ошибка=3003 (Превышен дневной лимит)'];
+    App.errors = ['Ошибка=3003 (Превышен дневной лимит)', 'Ошибка=1200200 (Откат транзакции)', 'Ошибка=1220140 (Ошибочный номер абонента)'];
 
     return App;
 
