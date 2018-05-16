@@ -2,7 +2,8 @@
 @font-color: rgba(0, 0, 0, .8);
 @border-color: rgba(0, 0, 0, .1);
 
-@main-color: #4CAF50;
+@main-color: rgb(76, 175, 80);
+@active-color: rgba(76, 175, 80, .5);
 
 .df {
 
@@ -209,8 +210,7 @@ textarea {
     .fdr;
     .f;
 
-    padding: 1em;
-    padding-bottom: 0;
+    padding: 1em 1em 0;
 
     & > .wrap-body-textarea:first-child {
 
@@ -229,6 +229,12 @@ textarea {
 
         border: thin solid @border-color;
         padding: .5em;
+
+        &:focus {
+
+          border: thin solid @active-color !important;
+
+        }
 
       }
 

@@ -5,8 +5,9 @@
   App = (function() {
     class App {
       static init() {
-        document.querySelector('#copyButton').addEventListener('click', this.copy);
-        document.querySelector('#eraseButton').addEventListener('click', this.clear);
+        this.copyButton.addEventListener('click', this.copy);
+        this.clearButton.addEventListener('click', this.clear);
+        this.ticketEdit.addEventListener('keyup', this.editListener);
       }
 
       static copy() {
@@ -19,8 +20,95 @@
         App.ticketDone.value = '';
       }
 
-      static genTicket(terminal, date, amount, number, operator, comment) {
-        return `Терминал: ${terminal}\nДата/время: ${date}\nСумма: ${amount}\nНомер счета/телефона: ${number}\nВерный номер счета/телефона:\nСервис/Оператор: ${operator}\nВерный Сервис/Оператор:\nКомментарий: ${comment}`;
+      static changeStatus(element) {
+        console.log(element);
+        this.autoStatus.classList.remove('active');
+        this.manualStatus.classList.remove('active');
+        element.classList.add('active');
+      }
+
+      static manualMode(value) {
+        var amount, comment, date, dateObj, getDate, getFullYear, getMonth, number, operator, terminal;
+        dateObj = new Date();
+        [terminal, date, amount, number, operator, comment] = value.split("\n");
+        amount += '.00';
+        if (date === void 0) {
+          date = '';
+        }
+        getDate = dateObj.getDate();
+        getMonth = dateObj.getMonth() + 1;
+        getFullYear = dateObj.getFullYear();
+        if (getDate < 10) {
+          getDate = `0${getDate}`;
+        }
+        if (getMonth < 10) {
+          getMonth = `0${getMonth}`;
+        }
+        if (date.indexOf('.') === -1) {
+          date = `${getDate}.${getMonth}.${getFullYear} ${date}`;
+        }
+        this.ticketDone.value = this.genTicket(terminal, date, amount, number, operator, comment, -1, -1);
+      }
+
+      static autoMode(value) {
+        var amount, date, error, number, numberPattern, operator, status, terminal, valuesArray;
+        valuesArray = value.split(';');
+        terminal = valuesArray[1];
+        date = valuesArray[2];
+        amount = valuesArray[6] + '.00';
+        number = valuesArray[4];
+        error = valuesArray[10];
+        status = valuesArray[9];
+        numberPattern = /\d{5,}/;
+        number = number.match(numberPattern);
+        operator = valuesArray[5];
+        this.ticketDone.value = this.genTicket(terminal, date, amount, number, operator, '', status, error);
+      }
+
+      static getError(val) {
+        var error, i, len, ref, results;
+        ref = this.errors;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          error = ref[i];
+          results.push((function(error) {
+            if (error.indexOf(val) !== -1) {
+              return error;
+            }
+          })(error));
+        }
+        return results;
+      }
+
+      static getStatus(val) {
+        var i, len, ref, results, status;
+        ref = this.statuses;
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          status = ref[i];
+          results.push((function(status) {
+            if (status.indexOf(val) !== -1) {
+              return status;
+            }
+          })(status));
+        }
+        return results;
+      }
+
+      static editListener() {
+        var value;
+        value = App.ticketEdit.value;
+        if (value.indexOf(';') !== -1) {
+          App.changeStatus(App.autoStatus);
+          App.autoMode(value);
+        } else {
+          App.changeStatus(App.manualStatus);
+          App.manualMode(value);
+        }
+      }
+
+      static genTicket(terminal, date, amount, number, operator, comment, status, error) {
+        return `Терминал: ${terminal}\nДата/время: ${date}\nСумма: ${amount}\nНомер счета/телефона: ${number}\nВерный номер счета/телефона:\nСервис/Оператор: ${operator}\nВерный Сервис/Оператор:\nКомментарий: ${comment}\n${this.getStatus(status)}\n${this.getError(error)}`;
       }
 
     };
@@ -28,6 +116,18 @@
     App.ticketEdit = document.querySelector('#ticketEdit');
 
     App.ticketDone = document.querySelector('#ticketDone');
+
+    App.copyButton = document.querySelector('#copyButton');
+
+    App.clearButton = document.querySelector('#clearButton');
+
+    App.autoStatus = document.querySelector('#autoStatus');
+
+    App.manualStatus = document.querySelector('#manualStatus');
+
+    App.statuses = ['Статус=120 (Платеж заблокирован при обработке)'];
+
+    App.errors = ['Ошибка=3003 (Превышен дневной лимит)'];
 
     return App;
 
