@@ -6,8 +6,8 @@
     "core.coffee"
   ],
   "names": [],
-  "mappings": ";AAAA;AAAA,MAAA;;EAAM,MAAN,MAAA,IAAA;IAES,OAAN,IAAM,CAAA,CAAA;aAEL,OAAO,CAAC,GAAR,CAAY,SAAZ;IAFK;;EAFT;;EAMA,GAAG,CAAC,IAAJ,CAAA;AANA",
+  "mappings": ";AAAA;AAAA,MAAA;;EAAM;IAAN,MAAA,IAAA;MAKS,OAAN,IAAM,CAAA,CAAA;QACL,QAAQ,CAAC,aAAT,CAAuB,aAAvB,CAAqC,CAAC,gBAAtC,CAAuD,OAAvD,EAAgE,IAAC,CAAA,IAAjE;QACA,QAAQ,CAAC,aAAT,CAAuB,cAAvB,CAAsC,CAAC,gBAAvC,CAAwD,OAAxD,EAAiE,IAAC,CAAA,KAAlE;MAFK;;MAKA,OAAN,IAAM,CAAA,CAAA;QACL,GAAG,CAAC,UAAU,CAAC,MAAf,CAAA;QACA,QAAQ,CAAC,WAAT,CAAqB,MAArB;MAFK;;MAKC,OAAP,KAAO,CAAA,CAAA;QACN,GAAG,CAAC,UAAU,CAAC,KAAf,GAAuB;QACvB,GAAG,CAAC,UAAU,CAAC,KAAf,GAAuB;MAFjB;;MAKI,OAAX,SAAW,CAAC,QAAD,EAAW,IAAX,EAAiB,MAAjB,EAAyB,MAAzB,EAAiC,QAAjC,EAA2C,OAA3C,CAAA;AACV,eAAO,CAAA,UAAA,CAAA,CAAa,QAAb,CAAsB,cAAtB,CAAA,CAAsC,IAAtC,CAA2C,SAA3C,CAAA,CAAsD,MAAtD,CAA6D,wBAA7D,CAAA,CAAuF,MAAvF,CAA8F,iDAA9F,CAAA,CAAiJ,QAAjJ,CAA0J,wCAA1J,CAAA,CAAoM,OAApM,CAAA;MADG;;IApBd;;IAEE,GAAC,CAAA,UAAD,GAAa,QAAQ,CAAC,aAAT,CAAuB,aAAvB;;IACb,GAAC,CAAA,UAAD,GAAa,QAAQ,CAAC,aAAT,CAAuB,aAAvB;;;;;;EAoBf,GAAG,CAAC,IAAJ,CAAA;AAvBA",
   "sourcesContent": [
-    "class App\r\n\r\n  @init: () ->\r\n\r\n    console.log 'Init...'\r\n\r\nApp.init()"
+    "class App\r\n\r\n  @ticketEdit: document.querySelector('#ticketEdit')\r\n  @ticketDone: document.querySelector('#ticketDone')\r\n\r\n  @init: () ->\r\n    document.querySelector('#copyButton').addEventListener('click', @copy)\r\n    document.querySelector('#eraseButton').addEventListener('click', @clear)\r\n    return\r\n\r\n  @copy: () ->\r\n    App.ticketDone.select()\r\n    document.execCommand('copy')\r\n    return\r\n\r\n  @clear: () ->\r\n    App.ticketEdit.value = '';\r\n    App.ticketDone.value = '';\r\n    return\r\n\r\n  @genTicket: (terminal, date, amount, number, operator, comment) ->\r\n    return \"Терминал: #{terminal}\\nДата/время: #{date}\\nСумма: #{amount}\\nНомер счета/телефона: #{number}\\nВерный номер счета/телефона:\\nСервис/Оператор: #{operator}\\nВерный Сервис/Оператор:\\nКомментарий: #{comment}\"\r\n\r\nApp.init()"
   ]
 }

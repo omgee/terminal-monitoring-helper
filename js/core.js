@@ -2,12 +2,36 @@
 (function() {
   var App;
 
-  App = class App {
-    static init() {
-      return console.log('Init...');
-    }
+  App = (function() {
+    class App {
+      static init() {
+        document.querySelector('#copyButton').addEventListener('click', this.copy);
+        document.querySelector('#eraseButton').addEventListener('click', this.clear);
+      }
 
-  };
+      static copy() {
+        App.ticketDone.select();
+        document.execCommand('copy');
+      }
+
+      static clear() {
+        App.ticketEdit.value = '';
+        App.ticketDone.value = '';
+      }
+
+      static genTicket(terminal, date, amount, number, operator, comment) {
+        return `Терминал: ${terminal}\nДата/время: ${date}\nСумма: ${amount}\nНомер счета/телефона: ${number}\nВерный номер счета/телефона:\nСервис/Оператор: ${operator}\nВерный Сервис/Оператор:\nКомментарий: ${comment}`;
+      }
+
+    };
+
+    App.ticketEdit = document.querySelector('#ticketEdit');
+
+    App.ticketDone = document.querySelector('#ticketDone');
+
+    return App;
+
+  }).call(this);
 
   App.init();
 
