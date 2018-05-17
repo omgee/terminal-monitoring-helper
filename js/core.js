@@ -126,10 +126,10 @@
           status = valuesArray[9];
           error = valuesArray[10];
         }
-        terminal.unique();
-        date.unique();
-        number.unique();
-        operator.unique();
+        terminal = terminal.unique();
+        date = date.unique();
+        number = number.unique();
+        operator = operator.unique();
         terminal = terminal.join(' / ');
         date = date.join(' / ');
         amount = amount.join(' / ');
