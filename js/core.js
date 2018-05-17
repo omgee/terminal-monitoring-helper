@@ -62,7 +62,7 @@
         number = valuesArray[4];
         error = valuesArray[10];
         status = valuesArray[9];
-        numberPattern = /\d{5,}/;
+        numberPattern = /\d{6,}/;
         number = number.match(numberPattern);
         operator = valuesArray[5];
         this.ticketDone.value = this.genTicket(terminal, date, amount, number, operator, '', status, error);
@@ -73,7 +73,7 @@
         ref = this.statuses;
         for (i = 0, len = ref.length; i < len; i++) {
           status = ref[i];
-          if (status.indexOf(val) !== -1) {
+          if (status.indexOf(`Статус=${val}`) !== -1) {
             return status;
           }
         }
@@ -85,7 +85,7 @@
         ref = this.errors;
         for (i = 0, len = ref.length; i < len; i++) {
           error = ref[i];
-          if (error.indexOf(val) !== -1) {
+          if (error.indexOf(`Ошибка=${val}`) !== -1) {
             return error;
           }
         }

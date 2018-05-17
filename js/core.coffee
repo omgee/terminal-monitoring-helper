@@ -14,7 +14,7 @@ class App
     'Статус=100 (Платеж не проведен)',
     'Статус=120 (Платеж заблокирован при обработке)',
     'Статус=112 (Платеж проведен оффлайн)',
-    'Статус=102 (Платеж отменен вручную)',
+    'Статус=102 (Платеж отменен вручную)'
   ]
   @errors: [
     'Ошибка=3003 (Превышен дневной лимит)',
@@ -73,7 +73,7 @@ class App
     number = valuesArray[4]
     error = valuesArray[10]
     status = valuesArray[9]
-    numberPattern = /\d{5,}/
+    numberPattern = /\d{6,}/
     number = number.match numberPattern
     operator = valuesArray[5]
     @ticketDone.value = @genTicket(terminal, date, amount, number, operator, '', status, error)
@@ -81,13 +81,13 @@ class App
 
   @getStatus: (val) ->
     for status in @statuses
-      if status.indexOf(val) isnt -1
+      if status.indexOf("Статус=#{val}") isnt -1
         return status
     return ''
 
   @getError: (val) ->
     for error in @errors
-      if error.indexOf(val) isnt -1
+      if error.indexOf("Ошибка=#{val}") isnt -1
         return error
     return ''
 
