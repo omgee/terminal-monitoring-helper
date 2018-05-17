@@ -80,16 +80,36 @@ class App
     return
 
   @autoMode: (value) ->
-    valuesArray = value.split ';'
-    terminal = valuesArray[1]
-    date = valuesArray[2]
-    amount = valuesArray[6] + '.00'
-    number = valuesArray[4]
-    error = valuesArray[10]
-    status = valuesArray[9]
+    Array::unique = ->
+      output = {}
+      output[@[key]] = @[key] for key in [0...@length]
+      value for key, value of output
+    terminal = []
+    date = []
+    amount = []
+    number = []
     numberPattern = /\d{6,}/
-    number = number.match numberPattern
-    operator = valuesArray[5]
+    operator = []
+    error = ''
+    status = ''
+    for val in value.split("\n")
+      valuesArray = val.split ';'
+      terminal.push valuesArray[1]
+      date.push valuesArray[2]
+      amount.push valuesArray[6] + '.00'
+      number.push valuesArray[4].match numberPattern
+      operator.push valuesArray[5]
+      status = valuesArray[9]
+      error = valuesArray[10]
+    terminal.unique()
+    date.unique()
+    number.unique()
+    operator.unique()
+    terminal = terminal.join(' / ')
+    date = date.join(' / ')
+    amount = amount.join(' / ')
+    number = number.join(' / ')
+    operator = operator.join(' / ')
     @ticketDone.value = @genTicket(terminal, date, amount, number, operator, '', status, error)
     return
 

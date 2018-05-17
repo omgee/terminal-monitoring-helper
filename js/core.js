@@ -92,17 +92,49 @@
       }
 
       static autoMode(value) {
-        var amount, date, error, number, numberPattern, operator, status, terminal, valuesArray;
-        valuesArray = value.split(';');
-        terminal = valuesArray[1];
-        date = valuesArray[2];
-        amount = valuesArray[6] + '.00';
-        number = valuesArray[4];
-        error = valuesArray[10];
-        status = valuesArray[9];
+        var amount, date, error, i, len, number, numberPattern, operator, ref, status, terminal, val, valuesArray;
+        Array.prototype.unique = function() {
+          var i, key, output, ref, results;
+          output = {};
+          for (key = i = 0, ref = this.length; (0 <= ref ? i < ref : i > ref); key = 0 <= ref ? ++i : --i) {
+            output[this[key]] = this[key];
+          }
+          results = [];
+          for (key in output) {
+            value = output[key];
+            results.push(value);
+          }
+          return results;
+        };
+        terminal = [];
+        date = [];
+        amount = [];
+        number = [];
         numberPattern = /\d{6,}/;
-        number = number.match(numberPattern);
-        operator = valuesArray[5];
+        operator = [];
+        error = '';
+        status = '';
+        ref = value.split("\n");
+        for (i = 0, len = ref.length; i < len; i++) {
+          val = ref[i];
+          valuesArray = val.split(';');
+          terminal.push(valuesArray[1]);
+          date.push(valuesArray[2]);
+          amount.push(valuesArray[6] + '.00');
+          number.push(valuesArray[4].match(numberPattern));
+          operator.push(valuesArray[5]);
+          status = valuesArray[9];
+          error = valuesArray[10];
+        }
+        terminal.unique();
+        date.unique();
+        number.unique();
+        operator.unique();
+        terminal = terminal.join(' / ');
+        date = date.join(' / ');
+        amount = amount.join(' / ');
+        number = number.join(' / ');
+        operator = operator.join(' / ');
         this.ticketDone.value = this.genTicket(terminal, date, amount, number, operator, '', status, error);
       }
 
