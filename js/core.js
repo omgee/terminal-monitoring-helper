@@ -28,29 +28,67 @@
       }
 
       static manualMode(value) {
-        var amount, comment, date, dateObj, getDate, getFullYear, getMonth, number, operator, terminal;
+        var am, amount, comment, da, date, dateObj, dates, genDate, number, operator, terminal;
         dateObj = new Date();
         [terminal, date, amount, number, operator, comment] = value.split("\n");
+        terminal = terminal.split(' ').join(' / ');
+        if (number === void 0) {
+          number = '';
+        }
+        if (operator === void 0) {
+          operator = '';
+        }
         if (amount === void 0) {
           amount = '';
         }
-        amount += '.00';
+        number = number.split(' ').join(' / ');
+        operator = operator.split(' ').join(' / ');
+        if (amount === void 0) {
+          amount = '';
+        }
+        amount = (function() {
+          var i, len, ref, results;
+          ref = amount.split(' ');
+          results = [];
+          for (i = 0, len = ref.length; i < len; i++) {
+            am = ref[i];
+            results.push(`${am}.00`);
+          }
+          return results;
+        })();
+        amount = amount.join(' / ');
         if (date === void 0) {
           date = '';
         }
-        getDate = dateObj.getDate();
-        getMonth = dateObj.getMonth() + 1;
-        getFullYear = dateObj.getFullYear();
-        if (getDate < 10) {
-          getDate = `0${getDate}`;
-        }
-        if (getMonth < 10) {
-          getMonth = `0${getMonth}`;
-        }
-        if (date.indexOf('.') === -1) {
-          date = `${getDate}.${getMonth}.${getFullYear} ${date}`;
-        }
-        this.ticketDone.value = this.genTicket(terminal, date, amount, number, operator, comment, -1, -1);
+        genDate = function(date) {
+          var getDate, getFullYear, getMonth;
+          getDate = dateObj.getDate();
+          getMonth = dateObj.getMonth() + 1;
+          getFullYear = dateObj.getFullYear();
+          if (getDate < 10) {
+            getDate = `0${getDate}`;
+          }
+          if (getMonth < 10) {
+            getMonth = `0${getMonth}`;
+          }
+          if (date.indexOf('.') === -1) {
+            return date = `${getDate}.${getMonth}.${getFullYear} ${date}`;
+          } else {
+            return date;
+          }
+        };
+        dates = (function() {
+          var i, len, ref, results;
+          ref = date.split(' ');
+          results = [];
+          for (i = 0, len = ref.length; i < len; i++) {
+            da = ref[i];
+            results.push(genDate(da));
+          }
+          return results;
+        })();
+        dates = dates.join(' / ');
+        this.ticketDone.value = this.genTicket(terminal, dates, amount, number, operator, comment, -1, -1);
       }
 
       static autoMode(value) {
@@ -124,9 +162,9 @@
 
     App.manualStatus = document.querySelector('#manualStatus');
 
-    App.statuses = ['Статус=0 (Ожидание проведения)', 'Статус=7 (Платеж завершен)', 'Статус=1 (Платеж проводится)', 'Статус=100 (Платеж не проведен)', 'Статус=120 (Платеж заблокирован при обработке)', 'Статус=112 (Платеж проведен оффлайн)', 'Статус=102 (Платеж отменен вручную)'];
+    App.statuses = ['Статус=0 (Ожидание проведения)', 'Статус=7 (Платеж завершен)', 'Статус=1 (Платеж проводится)', 'Статус=100 (Платеж не проведен)', 'Статус=108 (Платеж проведен вручную)', 'Статус=120 (Платеж заблокирован при обработке)', 'Статус=112 (Платеж проведен оффлайн)', 'Статус=102 (Платеж отменен вручную)'];
 
-    App.errors = ['Ошибка=3003 (Превышен дневной лимит)', 'Ошибка=1200200 (Откат транзакции)', 'Ошибка=1220140 (Ошибочный номер абонента)', 'Ошибка=1220117 (Недостаточно средств на счету дилера для проведения этого платежа)', 'Ошибка=1200002 (Состояние платежа неизвестно, сбой при осуществлении платежа в биллинг провайдера (в последствии состояние будет изменено на проведен или на один из откатов))', 'Ошибка=53 (Точка заблокирована)', 'Ошибка=1200200 (Откат транзакции)'];
+    App.errors = ['Ошибка=3003 (Превышен дневной лимит)', 'Ошибка=1200200 (Откат транзакции)', 'Ошибка=1220110 (Оплата в пользу сервис-провайдера невозможна)', 'Ошибка=1220140 (Ошибочный номер абонента)', 'Ошибка=1220117 (Недостаточно средств на счету дилера для проведения этого платежа)', 'Ошибка=1200002 (Состояние платежа неизвестно, сбой при осуществлении платежа в биллинг провайдера (в последствии состояние будет изменено на проведен или на один из откатов))', 'Ошибка=53 (Точка заблокирована)', 'Ошибка=1200200 (Откат транзакции)'];
 
     return App;
 
