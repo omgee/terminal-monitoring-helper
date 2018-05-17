@@ -106,6 +106,7 @@
           }
           return results;
         };
+        value = value.replace(/^\s+|\s+$/g, '');
         terminal = [];
         date = [];
         amount = [];

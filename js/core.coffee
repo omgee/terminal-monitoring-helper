@@ -84,6 +84,7 @@ class App
       output = {}
       output[@[key]] = @[key] for key in [0...@length]
       value for key, value of output
+    value = value.replace(/^\s+|\s+$/g, '');
     terminal = []
     date = []
     amount = []
