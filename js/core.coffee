@@ -7,6 +7,38 @@ class App
   @autoStatus: document.querySelector '#autoStatus'
   @manualStatus: document.querySelector '#manualStatus'
 
+  @ownerStatus: document.querySelector '#ownerStatus'
+  @owners: [
+    '87654491:9057765572',
+    '354:9250511492',
+    '15121045:9150305000',
+    '495:9264300299',
+    '9888549:9060965746',
+    '314:9640088004',
+    '513:9264300299',
+    '9887417:9250511492',
+    '496:9264300299',
+    '552:9640088084',
+    '9888542:9269174337',
+    '8765476:87654761',
+    '399:9803431231',
+    '107:9129762003',
+    '87654958:9851421603',
+    '9458936:9285551027',
+    '87654401:9626461645',
+    '497:9264300299',
+    '343:9288013005',
+    '889522:9289414041',
+    '109:9129762003',
+    '87654781:9207891111',
+    '400:9803431231',
+    '87654878:9285049405',
+    '15121205:9647894278',
+    '87654490:9057765572',
+    '9887645:9212056430',
+    '225:9260152710'
+  ]
+
   @statuses: [
     'Статус=0 (Ожидание проведения)',
     'Статус=7 (Платеж завершен)',
@@ -20,12 +52,18 @@ class App
   @errors: [
     'Ошибка=3003 (Превышен дневной лимит)',
     'Ошибка=1200200 (Откат транзакции)',
+    'Ошибка=1200500 (Откат транзакции)',
     'Ошибка=1220110 (Оплата в пользу сервис-провайдера невозможна)',
     'Ошибка=1220140 (Ошибочный номер абонента)',
     'Ошибка=1220117 (Недостаточно средств на счету дилера для проведения этого платежа)',
     'Ошибка=1200002 (Состояние платежа неизвестно, сбой при осуществлении платежа в биллинг провайдера (в последствии состояние будет изменено на проведен или на один из откатов))',
     'Ошибка=53 (Точка заблокирована)',
-    'Ошибка=1200200 (Откат транзакции)'
+    'Ошибка=1200200 (Откат транзакции)',
+    'Ошибка=1200500 (Откат транзакции)',
+    'Ошибка=1200300 (Недостаточно денег на счете дилера)',
+    'Ошибка=1220103 (Не найдена касса, соответствующая этому пользователю)',
+    'Ошибка=1220000 (Платеж в очереди)',
+    'Ошибка=2002 (Сетевая ошибка)'
   ]
 
   @init: () ->
@@ -42,18 +80,26 @@ class App
   @clear: () ->
     App.ticketEdit.value = '';
     App.ticketDone.value = '';
+    App.changeOwner 'Нет'
+    App.changeStatus()
     return
 
   @changeStatus: (element) ->
-    console.log element
+    if element is undefined
+      element = @manualStatus
     @autoStatus.classList.remove 'active'
     @manualStatus.classList.remove 'active'
     element.classList.add 'active'
     return
 
+  @changeOwner: (number) ->
+    @ownerStatus.innerHTML = number;
+    return
+
   @manualMode: (value) ->
     dateObj = new Date()
     [terminal, date, amount, number, operator, comment] = value.split("\n");
+    @changeOwner(@getOwner(terminal.split(' ')[0]))
     terminal = terminal.split(' ').join(' / ')
     number = '' if number is undefined
     operator = '' if operator is undefined
@@ -103,6 +149,7 @@ class App
       status = valuesArray[9]
       error = valuesArray[10]
     terminal = terminal.unique()
+    @changeOwner @getOwner(terminal[0])
     date = date.unique()
     number = number.unique()
     operator = operator.unique()
@@ -135,6 +182,12 @@ class App
       App.changeStatus App.manualStatus
       App.manualMode value
     return
+
+  @getOwner: (terminal) ->
+    for val in @owners
+      if val.split(':')[0] is terminal
+        return val.split(':')[1]
+    return 'Нет'
 
   @genTicket: (terminal = '', date = '', amount = '', number = '', operator = '', comment = '', status, error) ->
     status = @getStatus status

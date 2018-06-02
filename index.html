@@ -6,27 +6,30 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Terminal Monitoring Helper</title>
+    <title>Генератор заявок</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="css/desktop.css">
 </head>
 <body>
     <div class="wrap">
         <div class="wrap-header">
-            <div id="autoStatus" class="wrap-header-button">Auto</div>
-            <div id="manualStatus" class="wrap-header-button active">Manual</div>
+            <div id="autoStatus" class="wrap-header-button">Автоматически</div>
+            <div id="manualStatus" class="wrap-header-button active">Вручную</div>
         </div>
         <div class="wrap-body">
             <div class="wrap-body-textarea">
-                <textarea id="ticketEdit"></textarea>
+                <textarea id="ticketEdit" spellcheck="false"></textarea>
             </div>
             <div class="wrap-body-textarea">
-                <textarea id="ticketDone"></textarea>
+                <textarea id="ticketDone" spellcheck="false"></textarea>
             </div>
         </div>
         <div class="wrap-footer">
-            <div id="copyButton" class="wrap-footer-button">Copy</div>
-            <div id="clearButton" class="wrap-footer-button">Clear</div>
+            <div id="ownerStatus" class="wrap-footer-owner">
+                Нет
+            </div>
+            <div id="copyButton" class="wrap-footer-button">Скопировать</div>
+            <div id="clearButton" class="wrap-footer-button">Очистить</div>
         </div>
     </div>
     <script src="js/core.js"></script>

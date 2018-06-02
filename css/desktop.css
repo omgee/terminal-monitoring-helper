@@ -166,6 +166,32 @@ textarea {
   justify-content: flex-end;
   padding: 1em;
 }
+.wrap > .wrap-footer > .wrap-footer-owner {
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  border-radius: 0.25em;
+  overflow: hidden;
+  margin-right: auto;
+  font-size: 1.25em;
+  border: thin solid #4caf50;
+  padding-right: .25em;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+.wrap > .wrap-footer > .wrap-footer-owner::before {
+  content: 'Владелец';
+  background: #4caf50;
+  color: #fff;
+  padding: .25em;
+  margin-right: .2em;
+}
 .wrap > .wrap-footer > .wrap-footer-button {
   -webkit-border-radius: 0.25em;
   -moz-border-radius: 0.25em;
